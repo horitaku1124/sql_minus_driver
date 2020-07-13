@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+package tutorial;
+
+option java_package = "com.github.horitaku1124.kotlin.sql_minus_driver.protos";
+option java_outer_classname = "ExecQueryProtos";
+
+message Query {
+  required string query = 1;
+}

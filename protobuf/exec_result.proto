@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package tutorial;
+
+option java_package = "com.github.horitaku1124.kotlin.sql_minus_driver.protos";
+option java_outer_classname = "ExecResultProtos";
+
+message Result {
+  required int32 status = 1;
+  required string body = 2;
+}

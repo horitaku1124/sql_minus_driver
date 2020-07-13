@@ -1,5 +1,8 @@
 package com.github.horitaku1124.kotlin.sql_minus_driver
 
+import com.github.horitaku1124.kotlin.sql_minus_driver.protos.ExecQueryProtos
+import com.github.horitaku1124.kotlin.sql_minus_driver.protos.ExecResultProtos
+import java.lang.IllegalArgumentException
 import java.sql.*
 import java.util.*
 import java.util.concurrent.Executor
@@ -157,7 +160,23 @@ class SqlMinusConnection(host: String, port: Int): Connection {
   }
 
   override fun nativeSQL(sql: String?): String {
-    TODO("Not yet implemented")
+    if (sql == null) {
+      throw IllegalArgumentException("sql can't be NULL")
+    }
+    val query = ExecQueryProtos.Query.newBuilder()
+      .setQuery(sql)
+      .build()
+
+    val output = client.getOutputStream()
+    query.writeTo(output)
+    output.flush()
+    val input = client.getInputStream()
+
+    val buf = ByteArray(1024 * 1024)
+    var len = input.read(buf)
+    var newBuff = buf.copyOf(len)
+    val result = ExecResultProtos.Result.parseFrom(newBuff)
+    return result.body
   }
 
   override fun createStruct(typeName: String?, attributes: Array<out Any>?): Struct {
