@@ -13,7 +13,7 @@ class SqlMinusDriver: Driver {
   companion object {
     init {
       println("com.github.horitaku1124.kotlin.sql_minus_driver.SqlMinusDriver.load")
-      var driver = SqlMinusDriver()
+      val driver = SqlMinusDriver()
       DriverManager.registerDriver(driver)
     }
   }
