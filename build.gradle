@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.7.10'
-    id 'com.github.johnrengelman.shadow' version '7.1.2' // 追加
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group 'org.example'
@@ -16,7 +16,6 @@ java {
 }
 jar {
     manifest {
-        attributes "Main-Class": "com.github.keyno63.app.Main"
     }
 }
 
