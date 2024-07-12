@@ -173,12 +173,15 @@ class SqlMinusConnection(host: String, port: Int): Connection {
     val input = client.getInputStream()
 
     val buf = ByteArray(1024 * 1024)
-    var len = input.read(buf)
+    val len = input.read(buf)
     if (len < 0) {
       throw RuntimeException("empty result.")
     }
-    var newBuff = buf.copyOf(len)
+    val newBuff = buf.copyOf(len)
     val result = ExecResultProtos.Result.parseFrom(newBuff)
+    if (result.status == 2) {
+      throw RuntimeException(result.body)
+    }
     return result.body
   }
 
